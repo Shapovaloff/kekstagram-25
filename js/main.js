@@ -45,24 +45,18 @@ const getRandomIntInclusive = (min, max) => {
 const stringLength = (stringCheck, maxLength) => stringCheck.length <= maxLength;
 
 stringLength('Привет', 5);
-getRandomIntInclusive(40, 90);
 
 const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
 
 const createComments = (index) => {
-  const comments = [];
-  const commentsAmount = getRandomIntInclusive(2, 4);
+  const lengthComments = getRandomIntInclusive(2, 4);
 
-  for (let i = 0; i < commentsAmount; i++) {
-    comments.push({
-      id: index * 100 + i,
-      avatar: `img/avatar-${getRandomIntInclusive(1, 6)}.svg`,
-      message: getRandomArrayElement(MESSAGES),
-      name: getRandomArrayElement(NAMES),
-    });
-  }
-
-  return comments;
+  return new Array(lengthComments).fill(null).map((_, i) => ({
+    id: index * 100 + i,
+    avatar: `img/avatar-${getRandomIntInclusive(1, 6)}.svg`,
+    message: getRandomArrayElement(MESSAGES),
+    name: getRandomArrayElement(NAMES),
+  }));
 };
 
 const createImage = (index) => ({
@@ -73,14 +67,6 @@ const createImage = (index) => ({
   comments: createComments(index),
 });
 
-const createImages = () => {
-  const images = [];
-  for (let i = 0; i < IMAGES_COUNT; i ++) {
-    images.push(createImage(i));
-  }
-
-  return images;
-};
+const createImages = () => new Array(IMAGES_COUNT).fill(null).map((_, index) => createImage(index));
 
 createImages();
-
