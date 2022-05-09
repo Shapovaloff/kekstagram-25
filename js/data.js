@@ -54,6 +54,6 @@ const createImage = (index) => ({
   comments: createComments(index),
 });
 
-const createImages = () => new Array(IMAGES_COUNT).fill(null).map((_, index) => createImage(index));
+const createImages = (count) => new Array(count).fill(null).map((_, index) => createImage(index));
 
-export {createImages};
+export {createImages, IMAGES_COUNT};
