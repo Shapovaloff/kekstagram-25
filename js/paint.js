@@ -1,19 +1,21 @@
-import {createImages, IMAGES_COUNT} from './data.js';
+const createSmallImages = (images) => {
+  const picturesContainer = document.querySelector('.pictures');
+  const pictureTemplate = document.querySelector('#picture')
+    .content
+    .querySelector('.picture');
 
-const picturesContainer = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture')
-  .content
-  .querySelector('.picture');
+  const pictureFragment = document.createDocumentFragment();
 
-const pictures = createImages(IMAGES_COUNT);
-const pictureFragment = document.createDocumentFragment();
+  images.forEach(({url, comments, likes, id}) => {
+    const pictureElement = pictureTemplate.cloneNode(true);
+    pictureElement.id = id;
+    pictureElement.querySelector('.picture__img').src = url;
+    pictureElement.querySelector('.picture__comments').textContent = comments.length;
+    pictureElement.querySelector('.picture__likes').textContent = likes;
+    pictureFragment.appendChild(pictureElement);
+  });
 
-pictures.forEach(({url, comments, likes}) => {
-  const pictureElement = pictureTemplate.cloneNode(true);
-  pictureElement.querySelector('.picture__img').src = url;
-  pictureElement.querySelector('.picture__comments').textContent = comments.length;
-  pictureElement.querySelector('.picture__likes').textContent = likes;
-  pictureFragment.appendChild(pictureElement);
-});
+  picturesContainer.appendChild(pictureFragment);
+};
 
-picturesContainer.appendChild(pictureFragment);
+export {createSmallImages};

@@ -9,5 +9,6 @@ const getRandomIntInclusive = (min, max) => {
 };
 
 const stringLength = (stringCheck, maxLength) => stringCheck.length <= maxLength;
+const isEscapeKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-export {stringLength, getRandomIntInclusive};
+export {stringLength, getRandomIntInclusive, isEscapeKey};
