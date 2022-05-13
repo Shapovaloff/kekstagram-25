@@ -36,7 +36,7 @@ const NAMES = [
 const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
 
 const createComments = (index) => {
-  const lengthComments = getRandomIntInclusive(2, 4);
+  const lengthComments = getRandomIntInclusive(12, 25);
 
   return new Array(lengthComments).fill(null).map((_, i) => ({
     id: index * 100 + i,

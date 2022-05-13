@@ -1,11 +1,33 @@
 import {createCommentTemplate} from './comments.js';
 import {isEscapeKey} from './utils.js';
 
+const COMMENTS_AMOUNT = 5;
+const commentsLoaderButtonElement = document.body.querySelector('.comments-loader');
+const commentsCurrentCountElement = document.querySelector('.social__comment-count').childNodes[0];
+
 const renderComments = (commentsList, parent) => {
   const socialComments = parent.querySelector('.social__comments');
   socialComments.innerHTML = '';
-  const commentItems =  commentsList.map(createCommentTemplate).join('');
-  socialComments.insertAdjacentHTML('beforeend', commentItems);
+  let startIndex = 0;
+  let endIndex = startIndex + COMMENTS_AMOUNT;
+
+  return () => {
+    for (startIndex; startIndex < endIndex; startIndex++) {
+      const commentItems = createCommentTemplate(commentsList[startIndex]);
+      socialComments.insertAdjacentHTML('beforeend', commentItems);
+    }
+
+    endIndex = startIndex + COMMENTS_AMOUNT;
+    if (endIndex > commentsList.length) {
+      endIndex = commentsList.length;
+    }
+
+    if (startIndex >= endIndex) {
+      commentsLoaderButtonElement.classList.add('hidden');
+    }
+
+    commentsCurrentCountElement.nodeValue = `${startIndex} из `;
+  };
 };
 
 const changePopup = (images) => {
@@ -25,16 +47,6 @@ const changePopup = (images) => {
       }
     };
 
-    const closePopup = () => {
-      popupElement.classList.add('hidden');
-      document.removeEventListener('keydown', onPopupEscPress);
-    };
-
-    const openPopup = () => {
-      popupElement.classList.remove('hidden');
-      document.addEventListener('keydown', onPopupEscPress);
-    };
-
     evt.preventDefault();
     const id = +picture.id;
     const imageItem = images.find((item) => item.id === id);
@@ -47,7 +59,21 @@ const changePopup = (images) => {
     popupElement.querySelector('.social__caption').textContent = description;
     popupElement.querySelector('.likes-count').textContent = likes;
     popupElement.querySelector('.comments-count').textContent = comments.length;
-    renderComments(comments, popupElement);
+    const showMoreHandler = renderComments(comments, popupElement);
+    showMoreHandler(comments, popupElement);
+
+    const closePopup = () => {
+      popupElement.classList.add('hidden');
+      document.removeEventListener('keydown', onPopupEscPress);
+      commentsLoaderButtonElement.removeEventListener('click', showMoreHandler);
+      commentsLoaderButtonElement.classList.remove('hidden');
+    };
+
+    const openPopup = () => {
+      popupElement.classList.remove('hidden');
+      document.addEventListener('keydown', onPopupEscPress);
+      commentsLoaderButtonElement.addEventListener('click', showMoreHandler);
+    };
 
     openPopup();
     popupCloseButton.addEventListener('click', closePopup);
