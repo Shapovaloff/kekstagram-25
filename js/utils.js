@@ -11,15 +11,15 @@ const getRandomIntInclusive = (min, max) => {
 };
 
 const getRandomArray = (array) => {
-  const result = [];
+  const results = [];
   const cloneArray = array.slice();
   const maxArrayNumber = array.length > 10 ? 10 : array.length;
   for (let i = 0; i < maxArrayNumber; i++) {
     const randomIndex = getRandomIntInclusive(0, cloneArray.length - 1);
-    result.push(cloneArray.splice(randomIndex, 1)[0]);
+    results.push(cloneArray.splice(randomIndex, 1)[0]);
   }
 
-  return result;
+  return results;
 };
 
 const stringLength = (stringCheck, maxLength) => stringCheck.length <= maxLength;

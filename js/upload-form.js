@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils.js';
-import {closeImageUploadModal} from './upload.js';
+import {closeImageUploadModalHandler} from './upload.js';
 
 const HASHTAGS_MAX_AMOUNT = 5;
 const HASHTAG_MAX_LENGTH = 20;
@@ -96,17 +96,17 @@ const setUploadFormSubmit = () => {
       })
         .then((response) => {
           if (response.ok) {
-            closeImageUploadModal();
+            closeImageUploadModalHandler();
             popupMessageClass = 'success';
             showMessage();
           } else {
-            closeImageUploadModal();
+            closeImageUploadModalHandler();
             popupMessageClass = 'error';
             showMessage();
           }
         })
         .catch(() => {
-          closeImageUploadModal();
+          closeImageUploadModalHandler();
           popupMessageClass = 'error';
           showMessage();
         });

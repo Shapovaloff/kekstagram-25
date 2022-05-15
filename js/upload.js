@@ -11,23 +11,23 @@ const imageUploadModalCloseElement = imageUploadModalElement.querySelector('.img
 const imageUploadPreviewElement = imageUploadModalElement.querySelector('.img-upload__preview img');
 const uploadFormElement = document.querySelector('.img-upload__form');
 const buttonScaleList = document.querySelectorAll('button.scale__control');
-const scaleValueELement = document.querySelector('.scale__control--value');
+const scaleValueElement = document.querySelector('.scale__control--value');
 const sliderElement = document.querySelector('.effect-level__slider');
 
 const documentKeydownHandler = (evt) => {
   if (isEscapeKey(evt)) {
-    closeImageUploadModal(); // eslint-disable-line
+    closeImageUploadModalHandler(); // eslint-disable-line
   }
 };
 
 const uploadPreviewChangeScale = (value) => {
   imageUploadPreviewElement.style = `transform: scale(${value / 100})`;
-  scaleValueELement.value = `${value}%`;
+  scaleValueElement.value = `${value}%`;
 };
 
-const getCurrentScaleValue = () => Number(scaleValueELement.value.replace('%',''));
+const getCurrentScaleValue = () => Number(scaleValueElement.value.replace('%',''));
 
-const openImageUploadModal = () => {
+const openImageUploadModalHandler = () => {
   imageUploadModalElement.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', documentKeydownHandler);
@@ -36,7 +36,7 @@ const openImageUploadModal = () => {
   uploadPreviewChangeScale(scaleCurrentValue);
 };
 
-const closeImageUploadModal = () => {
+const closeImageUploadModalHandler = () => {
   imageUploadModalElement.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', documentKeydownHandler);
@@ -45,7 +45,7 @@ const closeImageUploadModal = () => {
   imageUploadPreviewElement.style = null;
 };
 
-const zoomIntOutImage = (evt) => {
+const zoomIntOutImageHandler = (evt) => {
   evt.preventDefault();
   const button = evt.target;
   let scaleCurrentValue = getCurrentScaleValue();
@@ -65,8 +65,8 @@ const zoomIntOutImage = (evt) => {
   uploadPreviewChangeScale(scaleCurrentValue);
 };
 
-buttonScaleList.forEach((button) => button.addEventListener('click', zoomIntOutImage));
-imageUploadElement.addEventListener('change', openImageUploadModal);
-imageUploadModalCloseElement.addEventListener('click', closeImageUploadModal);
+buttonScaleList.forEach((button) => button.addEventListener('click', zoomIntOutImageHandler));
+imageUploadElement.addEventListener('change', openImageUploadModalHandler);
+imageUploadModalCloseElement.addEventListener('click', closeImageUploadModalHandler);
 
-export {closeImageUploadModal};
+export {closeImageUploadModalHandler};
