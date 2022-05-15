@@ -16,7 +16,7 @@ const sliderElement = document.querySelector('.effect-level__slider');
 
 const documentKeydownHandler = (evt) => {
   if (isEscapeKey(evt)) {
-    closeImageUploadModal(evt); // eslint-disable-line
+    closeImageUploadModal(); // eslint-disable-line
   }
 };
 
@@ -36,8 +36,7 @@ const openImageUploadModal = () => {
   uploadPreviewChangeScale(scaleCurrentValue);
 };
 
-const closeImageUploadModal = (evt) => {
-  evt.preventDefault();
+const closeImageUploadModal = () => {
   imageUploadModalElement.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', documentKeydownHandler);

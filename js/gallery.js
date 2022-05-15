@@ -1,7 +1,19 @@
-import {createImages} from './data.js';
 import {createSmallImages} from './paint.js';
 import {changePopup} from './popup.js';
 
-const images = createImages();
-createSmallImages(images);
-changePopup(images);
+import {setUploadFormSubmit} from './upload-form.js';
+
+fetch('https://25.javascript.pages.academy/kekstagram/data')
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Не удалось загрузить данные');
+    }
+  })
+  .then((images) => {
+    createSmallImages(images);
+    changePopup(images);
+  });
+
+setUploadFormSubmit();
